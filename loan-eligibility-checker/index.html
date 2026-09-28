@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+<title>AI Loan Eligibility Checker | Smart BFSI Financial Assistant</title>
+<meta name="description" content="AI-powered BFSI platform for loan eligibility, credit score analysis, EMI calculation and financial tips." />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ================= NAVBAR ================= -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="brand" data-view="dashboard">
+        <span class="brand-icon">💠</span>
+        <span class="brand-text">FinWise<span class="accent">AI</span></span>
+      </div>
+      <button class="hamburger" id="hamburgerBtn" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links" id="navLinks">
+        <li data-view="dashboard" class="active">Dashboard</li>
+        <li data-view="loan">Loan Eligibility</li>
+        <li data-view="credit">Credit Score</li>
+        <li data-view="emi">EMI Calculator</li>
+        <li data-view="tips">AI Tips</li>
+        <li data-view="records">My Records</li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ================= TOAST ================= -->
+  <div id="toast" class="toast"></div>
+
+  <main class="app-main">
+
+    <!-- ================= DASHBOARD ================= -->
+    <section id="view-dashboard" class="view active-view">
+      <div class="hero glass-card">
+        <h1>Smart BFSI Financial Assistant</h1>
+        <p>AI-powered insights for loan eligibility, credit health, EMI planning and personal finance — built as an educational NASSCOM capstone project.</p>
+        <div class="hero-disclaimer">
+          ⚠️ Educational estimation tool only. Not a substitute for real bank approval, credit bureau reports, or professional financial advice.
+        </div>
+      </div>
+
+      <div class="card-grid">
+        <div class="dash-card glass-card" data-view="loan">
+          <div class="dash-icon">🏦</div>
+          <h3>Loan Eligibility Checker</h3>
+          <p>Check your estimated loan eligibility based on income, credit score, debt and more.</p>
+          <span class="cta">Check Eligibility →</span>
+        </div>
+
+        <div class="dash-card glass-card" data-view="credit">
+          <div class="dash-icon">📊</div>
+          <h3>Credit Score Analyzer</h3>
+          <p>Understand your credit score category, risk level and improvement tips.</p>
+          <span class="cta">Analyze Score →</span>
+        </div>
+
+        <div class="dash-card glass-card" data-view="emi">
+          <div class="dash-icon">🧮</div>
+          <h3>EMI Calculator</h3>
+          <p>Instantly calculate your monthly EMI, total interest and repayment amount.</p>
+          <span class="cta">Calculate EMI →</span>
+        </div>
+
+        <div class="dash-card glass-card" data-view="tips">
+          <div class="dash-icon">🤖</div>
+          <h3>AI Financial Tips</h3>
+          <p>Ask Claude AI beginner-friendly questions about loans, credit and savings.</p>
+          <span class="cta">Ask AI →</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= LOAN ELIGIBILITY ================= -->
+    <section id="view-loan" class="view">
+      <div class="view-header">
+        <h2>🏦 Loan Eligibility Checker</h2>
+        <p class="subtitle">Fill in your details for an educational eligibility estimate.</p>
+      </div>
+
+      <form id="loanForm" class="glass-card form-card" novalidate>
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="loanAge">Age (years)</label>
+            <input type="number" id="loanAge" min="18" max="100" required placeholder="e.g. 28" />
+            <span class="error-msg" id="err-loanAge"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="loanIncome">Monthly Income (₹)</label>
+            <input type="number" id="loanIncome" min="0" required placeholder="e.g. 45000" />
+            <span class="error-msg" id="err-loanIncome"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="employmentType">Employment Type</label>
+            <select id="employmentType" required>
+              <option value="">Select type</option>
+              <option value="salaried">Salaried</option>
+              <option value="self-employed">Self-Employed</option>
+              <option value="business">Business Owner</option>
+              <option value="unemployed">Unemployed</option>
+            </select>
+            <span class="error-msg" id="err-employmentType"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="employmentDuration">Employment Duration (years)</label>
+            <input type="number" id="employmentDuration" min="0" max="60" step="0.1" required placeholder="e.g. 3" />
+            <span class="error-msg" id="err-employmentDuration"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="existingEmi">Existing Monthly EMI/Debt (₹)</label>
+            <input type="number" id="existingEmi" min="0" required placeholder="e.g. 5000" />
+            <span class="error-msg" id="err-existingEmi"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="loanCreditScore">Credit Score (300–900)</label>
+            <input type="number" id="loanCreditScore" min="300" max="900" required placeholder="e.g. 720" />
+            <span class="error-msg" id="err-loanCreditScore"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="loanAmount">Desired Loan Amount (₹)</label>
+            <input type="number" id="loanAmount" min="1000" required placeholder="e.g. 500000" />
+            <span class="error-msg" id="err-loanAmount"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="loanTenure">Loan Tenure (years)</label>
+            <input type="number" id="loanTenure" min="1" max="30" required placeholder="e.g. 5" />
+            <span class="error-msg" id="err-loanTenure"></span>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-primary">Check Eligibility</button>
+      </form>
+
+      <div id="loanResult" class="result-card glass-card hidden"></div>
+    </section>
+
+    <!-- ================= CREDIT SCORE ANALYZER ================= -->
+    <section id="view-credit" class="view">
+      <div class="view-header">
+        <h2>📊 Credit Score Analyzer</h2>
+        <p class="subtitle">Enter your credit score to see its category and risk insights.</p>
+      </div>
+
+      <form id="creditForm" class="glass-card form-card" novalidate>
+        <div class="form-group">
+          <label for="creditScoreInput">Your Credit Score (300–900)</label>
+          <input type="number" id="creditScoreInput" min="300" max="900" required placeholder="e.g. 680" />
+          <span class="error-msg" id="err-creditScoreInput"></span>
+        </div>
+        <button type="submit" class="btn-primary">Analyze Score</button>
+      </form>
+
+      <div id="creditResult" class="result-card glass-card hidden"></div>
+    </section>
+
+    <!-- ================= EMI CALCULATOR ================= -->
+    <section id="view-emi" class="view">
+      <div class="view-header">
+        <h2>🧮 EMI Calculator</h2>
+        <p class="subtitle">Results update live as you type.</p>
+      </div>
+
+      <div class="glass-card form-card">
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="emiPrincipal">Loan Amount (₹)</label>
+            <input type="number" id="emiPrincipal" min="0" value="500000" />
+          </div>
+          <div class="form-group">
+            <label for="emiRate">Annual Interest Rate (%)</label>
+            <input type="number" id="emiRate" min="0" max="50" step="0.01" value="10.5" />
+          </div>
+          <div class="form-group">
+            <label for="emiTenureYears">Loan Tenure (years)</label>
+            <input type="number" id="emiTenureYears" min="0" max="40" value="5" />
+          </div>
+          <div class="form-group">
+            <label for="emiTenureMonths">Extra Months (0–11)</label>
+            <input type="number" id="emiTenureMonths" min="0" max="11" value="0" />
+          </div>
+        </div>
+        <span class="error-msg" id="err-emi"></span>
+      </div>
+
+      <div id="emiResult" class="result-card glass-card">
+        <div class="emi-summary">
+          <div class="emi-stat">
+            <span class="emi-label">Monthly EMI</span>
+            <span class="emi-value" id="emiMonthly">₹0</span>
+          </div>
+          <div class="emi-stat">
+            <span class="emi-label">Total Interest</span>
+            <span class="emi-value" id="emiInterest">₹0</span>
+          </div>
+          <div class="emi-stat">
+            <span class="emi-label">Total Repayment</span>
+            <span class="emi-value" id="emiTotal">₹0</span>
+          </div>
+        </div>
+        <div class="emi-bar-wrap">
+          <div class="emi-bar">
+            <div id="emiPrincipalBar" class="emi-bar-fill principal"></div>
+            <div id="emiInterestBar" class="emi-bar-fill interest"></div>
+          </div>
+          <div class="emi-bar-legend">
+            <span><i class="dot principal"></i> Principal</span>
+            <span><i class="dot interest"></i> Interest</span>
+          </div>
+        </div>
+        <button id="saveEmiBtn" class="btn-secondary">💾 Save this calculation</button>
+      </div>
+    </section>
+
+    <!-- ================= AI FINANCIAL TIPS ================= -->
+    <section id="view-tips" class="view">
+      <div class="view-header">
+        <h2>🤖 AI Financial Tips</h2>
+        <p class="subtitle">Ask Claude AI about loans, credit, savings, and money management.</p>
+      </div>
+
+      <div class="glass-card chat-card">
+        <div id="chatMessages" class="chat-messages">
+          <div class="chat-msg ai">
+            <p>👋 Hi! I'm your AI financial assistant. Ask me anything about loans, credit scores, EMIs, or saving money. This guidance is educational and not professional financial advice.</p>
+          </div>
+        </div>
+
+        <div class="chat-suggestions" id="chatSuggestions">
+          <button class="suggestion-chip">How can I improve my credit score?</button>
+          <button class="suggestion-chip">How much EMI can I afford?</button>
+          <button class="suggestion-chip">How should I manage my monthly income?</button>
+          <button class="suggestion-chip">How can I reduce my debt?</button>
+          <button class="suggestion-chip">Should I save before taking a loan?</button>
+        </div>
+
+        <form id="chatForm" class="chat-input-row">
+          <input type="text" id="chatInput" placeholder="Type your financial question..." maxlength="500" required />
+          <button type="submit" class="btn-primary" id="chatSendBtn">Send</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- ================= RECORDS ================= -->
+    <section id="view-records" class="view">
+      <div class="view-header">
+        <h2>📁 My Financial Records</h2>
+        <p class="subtitle">Records saved to Google Sheets (if configured on the backend).</p>
+      </div>
+
+      <div class="glass-card form-card">
+        <button id="loadRecordsBtn" class="btn-primary">🔄 Load My Records</button>
+      </div>
+
+      <div id="recordsResult" class="result-card glass-card hidden"></div>
+    </section>
+
+  </main>
+
+  <footer class="app-footer">
+    <p>AI Loan Eligibility Checker — NASSCOM Capstone Project. All results are educational estimations only.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
